@@ -49,11 +49,18 @@ yunohost service add "$app" --description="Technitium DNS Server" --log="/var/lo
 ynh_config_add_logrotate /var/log/technitium/dns
 
 #=================================================
+# ADD A CRON JOB
+#=================================================
+ynh_config_add --template="logsymlink.cron" --destination="/etc/cron.d/$app"
+chown root: "/etc/cron.d/$app"
+chmod 644 "/etc/cron.d/$app"
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start" --wait_until="in web browser to access web console."
+ynh_systemctl --service="$app" --action="start" --log_path=systemd --wait_until="Technitium DNS Server was started successfully"
 
 #=================================================
 # END OF SCRIPT
