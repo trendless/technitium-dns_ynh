@@ -18,14 +18,11 @@ fi
 
 ynh_hide_warnings yunohost firewall disallow Both 53
 
-# Remove the dedicated systemd config
 ynh_config_remove_systemd
 
-# Remove the dedicated NGINX config
 ynh_config_remove_nginx
 
-# Remove the log files
-ynh_safe_rm "/var/log/technitium"
+ynh_safe_rm "/var/log/$app"
 
 ynh_safe_rm "/etc/cron.d/$app"
 
