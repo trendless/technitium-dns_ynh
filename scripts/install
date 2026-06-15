@@ -27,7 +27,7 @@ ynh_config_add_nginx
 ynh_config_add_systemd
 yunohost service add "$app" --description="Technitium DNS Server" --log="/var/log/$app/$app.log" --needs_exposed_ports="53"
 
-mkdir -p "/var/log/$app/dns"
+mkdir -p "/var/log/$app"
 chown -R "$app:$app" "/var/log/$app"
 
 #=================================================
@@ -45,7 +45,7 @@ ynh_script_progression "Starting $app's systemd service..."
 # Start a systemd service
 ynh_systemctl --service="$app" --action="start" --log_path=systemd --wait_until="was started successfully"
 
-ln -sf $(ls -t /var/log/$app/dns/*.log | head -n 1) /var/log/$app/$app.log
+ln -sf $(ls -t $data_dir/logs/*.log | head -n 1) /var/log/$app/$app.log
 
 #=================================================
 # END OF SCRIPT
